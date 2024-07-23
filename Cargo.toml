@@ -5,7 +5,7 @@ edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-# Disable unwinding --> set the panic strategy to abort for both the dev profile (cargo build) and the release profile (cargo build --release).
+# Disable stack unwinding on panic
 [profile.dev]
 panic = "abort"
 
@@ -13,3 +13,8 @@ panic = "abort"
 panic = "abort"
 
 [dependencies]
+bootloader = "0.9"
+volatile = "0.2.6"
+
+[target.'cfg(target_os = "none")']
+runner = "bootimage runner"
