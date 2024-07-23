@@ -6,13 +6,26 @@
 
 
 mod vga_buffer;
+mod serial;
+
 
 use core::panic::PanicInfo;
 
-
+// Panic handler for normal run
+#[cfg(not(test))] 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
+    loop {}
+}
+
+// Panic handler for test mode
+#[cfg(test)]
+#[panic_handler]
+fn panic(info: &PanicInfo) -> ! {
+    serial_println!("[failed]\n");
+    serial_println!("Error: {}\n", info);
+    exit_qemu(QemuExitCode::Failed);
     loop {}
 }
 
@@ -47,7 +60,8 @@ pub fn exit_qemu(exit_code: QemuExitCode) {
 // ------------------ TESTING ------------------
 #[cfg(test)]
 pub fn test_runner(tests: &[&dyn Fn()]) {
-    println!("Running {} tests", tests.len());
+    // Print to serial interface instead of VGA buffer
+    serial_println!("Running {} tests", tests.len());
     for test in tests {
         test();
     }
@@ -57,8 +71,8 @@ pub fn test_runner(tests: &[&dyn Fn()]) {
 // `tests` slice passed to test_runner contains reference to test functions 
 #[test_case]
 fn trivial_assertion() {
-    print!("trivial assertion... ");
-    assert_eq!(1, 1);
+    serial_print!("trivial assertion... ");
+    assert_eq!(0, 1);
     println!("[ok]");
 }
 
