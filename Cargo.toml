@@ -1,0 +1,15 @@
+[package]
+name = "os_kernel"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+# Disable unwinding --> set the panic strategy to abort for both the dev profile (cargo build) and the release profile (cargo build --release).
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+
+[dependencies]
