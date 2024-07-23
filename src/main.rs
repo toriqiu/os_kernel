@@ -30,6 +30,13 @@ pub extern "C" fn _start() -> ! {
     println!("Starting{}", "!");
 
     os_kernel::init(); 
+    
+    fn stack_overflow() {
+        stack_overflow(); 
+    }
+
+    stack_overflow();
+
     // Breakpoint exception
     x86_64::instructions::interrupts::int3(); 
 
