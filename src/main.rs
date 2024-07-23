@@ -13,7 +13,7 @@ use os_kernel::println;
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
-    loop {}
+    os_kernel::hlt_loop(); 
 }
 
 // Test mode
@@ -36,6 +36,7 @@ pub extern "C" fn _start() -> ! {
     test_main();
 
     println!("No crash");
+    os_kernel::hlt_loop(); 
     loop {}
 }
 
