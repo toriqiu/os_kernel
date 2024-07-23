@@ -1,4 +1,4 @@
-// Run with: `cargo test --test stack_overflow`
+/* Run with: `cargo test --test stack_overflow` */
 #![no_std]
 #![no_main]
 #![feature(abi_x86_interrupt)]
@@ -32,7 +32,7 @@ lazy_static! {
     };
 }
 
-// Custom double fault handler that does exit_qemu(QemuExitCode::Success) instead of panicking
+/* Custom double fault handler that does exit_qemu(QemuExitCode::Success) instead of panicking */
 pub fn init_test_idt() {
     TEST_IDT.load();
 }

@@ -1,3 +1,4 @@
+/* Run with: cargo test --test should_panic */
 #![no_std]
 #![no_main]
 #![feature(custom_test_frameworks)]
@@ -32,4 +33,3 @@ fn panic(_info: &PanicInfo) -> ! {
 
 use os_kernel::serial_print;
 
-// cargo test --test should_panic

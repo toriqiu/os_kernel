@@ -31,15 +31,6 @@ pub extern "C" fn _start() -> ! {
 
     os_kernel::init(); 
     
-    fn stack_overflow() {
-        stack_overflow(); 
-    }
-
-    stack_overflow();
-
-    // Breakpoint exception
-    x86_64::instructions::interrupts::int3(); 
-
     // Conditional compilation to avoid testing on normal runs
     #[cfg(test)]
     test_main();

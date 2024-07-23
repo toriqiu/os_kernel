@@ -1,4 +1,4 @@
-// Split off a library from main.rs for integration test executables
+/* Split off a library from main.rs for integration test executables */
 #![no_std]
 #![cfg_attr(test, no_main)]
 #![feature(custom_test_frameworks)]
@@ -13,9 +13,12 @@ pub mod vga_buffer;
 pub mod interrupts;
 pub mod gdt;
 
+
 pub fn init() {
     gdt::init();
     interrupts::init_idt();
+    unsafe { interrupts::PICS.lock().initialize() }; // Init the 8259 PIC 
+    x86_64::instructions::interrupts::enable();  
 }
 
 pub trait Testable {
