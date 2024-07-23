@@ -23,14 +23,21 @@ fn panic(info: &PanicInfo) -> ! {
     os_kernel::test_panic_handler(info)
 }
 
+
 #[no_mangle]
 // Overwrite OS entry point
 pub extern "C" fn _start() -> ! {
     println!("Starting{}", "!");
 
+    os_kernel::init(); 
+    // Breakpoint exception
+    x86_64::instructions::interrupts::int3(); 
+
     // Conditional compilation to avoid testing on normal runs
     #[cfg(test)]
     test_main();
+
+    println!("No crash");
     loop {}
 }
 
